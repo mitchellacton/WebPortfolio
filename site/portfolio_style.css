@@ -1,0 +1,43 @@
+body {
+    margin:0px;
+    font-family: Arial, Helvetica, sans-serif;
+    }
+.topnav {
+    width: 100%;
+    
+    overflow: auto;
+    background-color: #007ab3;
+    
+    }   
+div.topnav{
+    padding: 0px
+}
+.topnav a {
+    float: left;
+    
+    color:#eeeeee;
+    text-align: center;
+    padding: 10px 30px 10px 30px;
+    text-decoration: none;
+    font-size: 3vh;                
+}
+h1, h2{
+    padding: 10px;
+}
+
+div{
+    padding: 10px;
+}
+
+.topnav a:hover {
+    color: rgb(0, 217, 255);
+}
+a.active{
+    background-color: rgb(0, 217, 255);
+    color: #007ab3;
+}
+
+a.active:hover{
+    color: #007ab3;
+    background-color:  rgb(86, 230, 255);
+}
