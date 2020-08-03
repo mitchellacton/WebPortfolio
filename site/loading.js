@@ -14,8 +14,8 @@ function setup() {
 }
 
 function draw() {
-  background(255,50);
-  stroke(rPulse,rPulse,rPulse)
+  background(238,50);
+  stroke(rPulse-100,rPulse-100,rPulse-100)
   strokeWeight(r/2);
   noFill()
   
