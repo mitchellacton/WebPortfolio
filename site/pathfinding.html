@@ -7,12 +7,22 @@
 <body>
     <div class="topnav">
         <a href="index.html">Home</a>
-        <a href="sorting.html">Sorting</a>
+        <a href="bubble.html">Sorting</a>
         <a class="active" href="pathfinding.html">Pathfinding</a>
         <a href="chaos.html">Chaos</a>
         <a href="fun.html">Fun</a>
         <a href="contact.html">Contact</a>
+        <label class="switch">
+            <input type="checkbox" onclick="modeSwitch()">
+            <span class="slideswitch round"></span>
+        </label>
       </div>
+      <script>
+          function modeSwitch() {
+            var element = document.body;
+            element.classList.toggle("dark-mode");
+          }
+      </script>
     <h1>Pathfinding Algorithms</h1>
     <h2>See how different algorithms find a path between two points</h2> 
     

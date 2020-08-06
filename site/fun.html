@@ -7,12 +7,22 @@
 <body>
     <div class="topnav">
         <a href="index.html">Home</a>
-        <a href="sorting.html">Sorting</a>
+        <a href="bubble.html">Sorting</a>
         <a href="pathfinding.html">Pathfinding</a>
         <a href="chaos.html">Chaos</a>
         <a class="active" href="fun.html">Fun</a>
         <a href="contact.html">Contact</a>
+        <label class="switch">
+            <input type="checkbox" onclick="modeSwitch()">
+            <span class="slideswitch round"></span>
+        </label>
       </div>
+      <script>
+          function modeSwitch() {
+            var element = document.body;
+            element.classList.toggle("dark-mode");
+          }
+      </script>
     <h1>Fun Projects</h1>
     <h2> Collection of some fun coding projects I have made to advance my skills</h2>
 

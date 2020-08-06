@@ -7,12 +7,22 @@
 <body>
     <div class="topnav">
         <a href="index.html">Home</a>
-        <a href="sorting.html">Sorting</a>
+        <a href="bubble.html">Sorting</a>
         <a href="pathfinding.html">Pathfinding</a>
         <a href="chaos.html">Chaos</a>
         <a href="fun.html">Fun</a>
         <a class="active" href="contact.html">Contact</a>
-    </div>
+        <label class="switch">
+            <input type="checkbox" onclick="modeSwitch()">
+            <span class="slideswitch round"></span>
+        </label>
+      </div>
+      <script>
+          function modeSwitch() {
+            var element = document.body;
+            element.classList.toggle("dark-mode");
+          }
+      </script>
     <h1>Contact Information</h1>
     <div>Name: Mitchell Acton</div> 
     <div>Phone: 519 xxx xxxx</div> 
