@@ -4,8 +4,14 @@ if (sessionStorage.getItem('bg') === '#eee') {
     document.getElementById("darkSwitch").checked = false;
     document.body.style.backgroundColor = sessionStorage.getItem('bg');
 
-}else{ document.getElementById("darkSwitch").checked = true;
-       document.body.style.backgroundColor = sessionStorage.getItem('bg');
+}else if (sessionStorage.getItem('bg') == null || undefined){
+    document.getElementById("darkSwitch").checked = false;
+    document.body.style.backgroundColor = '#eee'
+}
+
+else{ 
+    document.getElementById("darkSwitch").checked = true;
+    document.body.style.backgroundColor = sessionStorage.getItem('bg');
 }
 function darkMode() {
      if ( sessionStorage.getItem('bg') === '#eee') {
