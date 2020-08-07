@@ -13,16 +13,11 @@
         <a href="fun.html">Fun</a>
         <a class="active" href="contact.html">Contact</a>
         <label class="switch">
-            <input type="checkbox" onclick="modeSwitch()">
+            <input type="checkbox" id="darkSwitch" onclick="darkMode()">
             <span class="slideswitch round"></span>
         </label>
       </div>
-      <script>
-          function modeSwitch() {
-            var element = document.body;
-            element.classList.toggle("dark-mode");
-          }
-      </script>
+      <script src="darkMode.js"></script>
     <h1>Contact Information</h1>
     <div>Name: Mitchell Acton</div> 
     <div>Phone: 519 xxx xxxx</div> 
