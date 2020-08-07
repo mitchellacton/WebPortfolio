@@ -1,8 +1,6 @@
 :root {
     --light:#eee;
-    --dark: #222
-
-}
+ }
 canvas{
     width: 100%;
 }
@@ -14,10 +12,7 @@ body {
     background: var(--light);
     transition: 0.4s;
     }
-.dark-mode {
-    background-color: var(--dark);
-        
-    }
+
 .topnav {
     width: 100%;
     
