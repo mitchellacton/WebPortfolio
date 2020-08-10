@@ -112,6 +112,14 @@ a.active:hover{
     text-align: center;
     margin: 4px 2px 4px 2px;
   }
+  .buttonBox{
+    float: left;
+    font-weight: bold;
+    color: white;
+    background-color: #007ab3;
+    margin: 4px 2px 4px 2px;
+    padding:4px 0px 4px 0px;
+  }
   .slider {
     -webkit-appearance: none;
     width: 90%;
@@ -188,7 +196,18 @@ a.active:hover{
       background-color: #7fb2ca;
       
   }
-
+  .switchBox{
+    float: left;
+    position: relative;
+    font-weight: bold;
+    width: 80px;
+    padding: 4px 4px;
+    background-color: #007ab3;
+    color: white;
+    text-align: left;
+    margin: 4px 2px 4px 2px;
+    height: 40px;
+  }
   .switch {
     float: right;
     position: relative;
@@ -233,6 +252,8 @@ a.active:hover{
     transition: .4s;
   }
 
+  
+
   .slideswitch.round:before {
     border-radius: 50%;
   }
@@ -247,3 +268,64 @@ a.active:hover{
     transform: translateX(47px);
     background-color: #56e6ff
   }
+
+  .switch2 {
+    
+    position: absolute;
+    bottom: 4px;
+    right: 6px;
+    width: 20px;
+    height: 40px;
+    }
+
+  .slideswitch2 {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #a6cbdc;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+  
+  
+  .slideswitch2.round {
+      border-radius: 25px;
+    }
+  
+  .switch2 input { 
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+  
+  .slideswitch2:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 1px;
+      bottom: 1px;
+      background-color: #007ab3;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+  
+    
+  
+    .slideswitch2.round:before {
+      border-radius: 50%;
+    }
+  
+    input:checked + .slideswitch2 {
+      background-color: #56e6ff;
+    }
+  
+    input:checked + .slideswitch2:before {
+      -webkit-transform: translateY(-20px);
+      -ms-transform: translateY(-20px);
+      transform: translateY(-20px);
+      background-color: #007ab3
+    }

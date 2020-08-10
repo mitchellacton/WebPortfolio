@@ -34,12 +34,14 @@ var arr = [],
     slider2 = document.getElementById('sortSpeed'), //sort speed
     slow = 51-slider2.value,
     sortable = document.getElementById("sortBtn"), //sort button
+    speedable = document.getElementById("speedSwitch"),
     w = 0,
     bbl_i = 0,
     bbl_j = 0,
     tick = 0,
     stopSort = false, //prevents initializing sort function while already sorting
     c = document.getElementById('c'),
+    instant = document.getElementById('speedSwitch').checked,    
     ctx = c.getContext('2d');
     
 
@@ -113,9 +115,11 @@ window.requestAnimFrame = (function() {
 })();
 
 function update(){              //sorting algorithm: bubble sort
+  instant = document.getElementById('speedSwitch').checked;
   if (sortable.disabled == true){ // prevents user from running sorting algorithm while it is already running
       if (stopSort==true){
           sortable.disabled = false;
+          speedable.disabled = false;
           stopSort = false;
           return
       }
@@ -123,36 +127,56 @@ function update(){              //sorting algorithm: bubble sort
     stopSort = false;
   }
   sortable.disabled = true;
-  if (bbl_j == 0 && bbl_i!=count){
-    arr[0].col = colors.violet;
-  }
-    
-  if (tick % slow == 0) { // determines display speed
-    if (bbl_i < count) { // start of algorithm
-      if (bbl_j<count-bbl_i-1){
-        if (arr[bbl_j].h>arr[bbl_j+1].h){
-          swap(arr, bbl_j,bbl_j+1);
+  speedable.disabled = true;
+  if (instant == false){  
+    if (bbl_j == 0 && bbl_i!=count){
+      arr[0].col = colors.violet;
+    }  
+    if (tick % slow == 0) { // determines display speed
+      if (bbl_i < count) { // start of algorithm
+        if (bbl_j<count-bbl_i-1){
+          if (arr[bbl_j].h>arr[bbl_j+1].h){
+            swap(arr, bbl_j,bbl_j+1);
+          }
+          arr[bbl_j].col = colors.grey;
+          arr[bbl_j+1].col = colors.violet;
+          bbl_j++;
+        }else{
+          arr[bbl_j].col = colors.blue
+          bbl_j = 0;
+          bbl_i++;
         }
-        arr[bbl_j].col = colors.grey;
-        arr[bbl_j+1].col = colors.violet;
-        bbl_j++;
-      }else{
-        arr[bbl_j].col = colors.blue
-        bbl_j = 0;
-        bbl_i++;
+      }
+    } //end of algorithm
+
+    tick++;
+    ctx.clearRect(0, 0, c.width, c.height); //clears previously drawn rectangles
+    drawRects();                            //draws next frame of rectangles
+    if (bbl_i<count){
+      window.requestAnimFrame(update);
+    }      
+    if (bbl_i==count){
+      sortable.disabled = false;
+      speedable.disabled = false;
+    }
+  }else{
+    
+    for (i=0;i<count-bbl_i-1;i++){
+      if (arr[i].col==colors.violet){
+        arr[i].col=colors.grey;
+      }
+      if (arr[i].h>arr[i+1].h){
+        swap(arr,i,i+1)        
       }
     }
-  } //end of algorithm
-
-  tick++;
-      
-  ctx.clearRect(0, 0, c.width, c.height); //clears previously drawn rectangles
-  drawRects();                            //draws next frame of rectangles
-  if (bbl_i<count){
-    window.requestAnimFrame(update);}
-      
-  if (bbl_i==count){
-    sortable.disabled = false;
+    for (i=0;i<count-bbl_i;i++){
+      if (i==count-bbl_i-1){
+        arr[i].col=colors.blue}
+    }
+    bbl_i+=1
+    ctx.clearRect(0, 0, c.width, c.height); 
+    drawRects();
+    window.requestAnimFrame(update);
   }
 }
 
@@ -163,7 +187,7 @@ function randomize(){ //generates a new random array of rectangles
   arr = [];
     
   for(var i=0; i<count; i++) {
-    var h = Math.round(.75*c.height*(Math.random()+0.25)),
+    var h = Math.round(Math.random() * (.75*c.height - .15*c.height) + .15*c.height),
         col = colors.grey;
     arr.push(new Rect(h, col));}
     resize();
