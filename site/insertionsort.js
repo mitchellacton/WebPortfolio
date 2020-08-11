@@ -118,6 +118,7 @@ function update(){              //sorting algorithm: bubble sort
   instant = document.getElementById('speedSwitch').checked;
   if (sortable.disabled == true){ // prevents user from running sorting algorithm while it is already running
       if (stopSort==true){
+          tick = 0;
           sortable.disabled = false;
           speedable.disabled = false;
           stopSort = false;
@@ -129,56 +130,103 @@ function update(){              //sorting algorithm: bubble sort
   sortable.disabled = true;
   speedable.disabled = true;
   if (instant == false){  
-    if (bbl_j == 0 && bbl_i!=count){
-      arr[0].col = colors.violet;
+    if (bbl_i == 0 && bbl_i!=count){
+        if (tick == 0){
+            arr[0].col = colors.blue;
+            arr[1].col = colors.violet;
+            ctx.clearRect(0, 0, c.width, c.height);
+            drawRects();
+            tick++
+        }
     }  
     if (tick % slow == 0) { // determines display speed
-      if (bbl_i < count) { // start of algorithm
-        if (bbl_j<count-bbl_i-1){
-          if (arr[bbl_j].h>arr[bbl_j+1].h){
-            swap(arr, bbl_j,bbl_j+1);
-          }
-          arr[bbl_j].col = colors.grey;
-          arr[bbl_j+1].col = colors.violet;
-          bbl_j++;
-        }else{
-          arr[bbl_j].col = colors.blue
-          bbl_j = 0;
-          bbl_i++;
+        if (bbl_i < count-1) { // start of algorithm
+            if (bbl_i == 0){
+                if (arr[1].h<arr[0].h){
+                    swap(arr, 0, 1);
+                }
+                arr[0].col = colors.blue;
+                arr[1].col = colors.blue;
+                bbl_i++;
+                bbl_j=bbl_i+1
+                arr[bbl_j].col = colors.violet;
+            }else{
+                if (bbl_j == 0){
+                    arr[bbl_j].col = colors.blue;
+                    bbl_j=bbl_i+1;
+                    arr[bbl_j].col = colors.violet;
+                }else{
+                    if (arr[bbl_j-1].h>arr[bbl_j].h){
+                        swap(arr,bbl_j-1,bbl_j);
+                        bbl_j--;
+                        arr[bbl_j].col = colors.violet;
+                        arr[bbl_j+1].col = colors.blue;
+                        if (bbl_j == 0){
+                            bbl_i++;
+                        }
+                    }else{
+                        arr[bbl_j].col = colors.blue;
+                        bbl_j = 0;
+                        bbl_i++;
+                        bbl_j = bbl_i+1;
+                        if (bbl_i<count-1){
+                            arr[bbl_i+1].col = colors.violet;
+                        }
+                    }
+                }          
+            }         
         }
-      }
-    } //end of algorithm
-
+    }
+     //end of algorithm
+    
     tick++;
     ctx.clearRect(0, 0, c.width, c.height); //clears previously drawn rectangles
     drawRects();                            //draws next frame of rectangles
-    if (bbl_i<count){
+    if (bbl_i<count-1){
       window.requestAnimFrame(update);
     }      
-    if (bbl_i==count){
-      sortable.disabled = false;
-      speedable.disabled = false;
+    if (bbl_i==count-1){
+        sortable.disabled = false;
+        speedable.disabled = false;
+        bbl_i = 0;
+        bbl_j = 0;
+        tick = 0;
     }
-  }else{
-    
-    for (i=0;i<count-bbl_i-1;i++){
-      if (arr[i].h>arr[i+1].h){
-        swap(arr,i,i+1)        
-      }
-    }
-    for (i=0;i<count-bbl_i;i++){
-      if (i==count-bbl_i-1){
-        arr[i].col=colors.blue}
-    }
+    }else{
+        if (bbl_i == 0){
+            if (arr[1].h<arr[0].h){
+                swap(arr, 0, 1);
+            }
+            arr[0].col = colors.blue;
+        }else{
+            bbl_j=bbl_i+1;
+            for (i=bbl_i;i>=0;i--){
+                if (arr[bbl_j].h<arr[i].h){
+                    swap(arr,bbl_j,i)
+                    bbl_j-=1;
+                }
+            }
+        }
+    arr[bbl_i+1].col = colors.blue;
     bbl_i+=1
     ctx.clearRect(0, 0, c.width, c.height); 
     drawRects();
-    window.requestAnimFrame(update);
+    if (bbl_i<count-1){
+        window.requestAnimFrame(update);
+    }
+    if (bbl_i==count-1){
+        sortable.disabled = false;
+        speedable.disabled = false;
+        bbl_i = 0;
+        bbl_j = 0;
+        tick = 0;
+      }
   }
 }
 
 function randomize(){ //generates a new random array of rectangles
   stopSort=true;      //halts sorting if currently in progress
+  tick = 0;
   bbl_i = 0;
   bbl_j = 0;
   arr = [];
