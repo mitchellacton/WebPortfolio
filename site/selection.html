@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mitchell's Lovely Website</title>
+    <link rel="stylesheet" type="text/css" href="portfolio_style.css">
+    <script src="libraries/p5.js"></script>
+    
+    
+</head>
+<body>
+    <div class="topnav">
+        <a href="index.html">Home</a>
+        <a class="active" href="bubble.html">Sorting</a>
+        <a href="pathfinding.html">Pathfinding</a>
+        <a href="chaos.html">Chaos</a>
+        <a href="fun.html">Fun</a>
+        <a href="contact.html">Contact</a>
+        <label class="switch">
+            <input type="checkbox" id="darkSwitch" onclick="darkMode()">
+            <span class="slideswitch round"></span>
+        </label>
+      </div>
+      <script src="darkMode.js"></script>
+    
+    <div class = "sortnav">
+        <div class="dropdown">
+            <button class="button">Algorithm: Selection Sort</button>
+            <div class="dropdown-content">
+                <a href="bubble.html">Bubble Sort</a>
+                <a href="insertion.html">Insertion Sort</a>
+                <a href="selection.html">Selection Sort</a>
+                <a href="merge.html">Merge Sort</a>
+                <a href="heap.html">Heap Sort</a>
+                <a href="quick.html">Quick Sort</a>
+            </div>
+        </div>
+        <p class = "sliderBox">Array Size<input type="range" min="10" max="210" value="100" class="slider" id="arraySize"></p>
+        <p class = "sliderBox">Sort Speed<input type="range" min="1" max="50" value="50" class="slider" id="sortSpeed"></p>
+        <button class = "button" type="button" id="randomBtn" onclick="randomize()">Randomize</button>
+        <button class = "button" type="button" id="sortBtn" onclick="update()">Sort</button>
+        <p class= "switchBox">Top<br>Speed<br>
+            <label class="switch2">
+                <input type="checkbox" id="speedSwitch">
+                <span class="slideswitch2 round"></span>
+            </label>
+        </p>
+    
+        
+            
+        
+
+    </div>
+    
+    
+        <canvas id="c">
+            <script src="selectionsort.js"></script>
+        </canvas>
+        
+    
+    
+     
+
+
+</body>
+</html>
