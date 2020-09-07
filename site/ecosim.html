@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Mitchell's Lovely Website</title>
+    <title>Mitchell's Web Portfolio</title>
     <link rel="stylesheet" type="text/css" href="portfolio_style.css">
     <script src="libraries/p5.js"></script>
 </head>
@@ -38,14 +38,18 @@
         <p class = "sliderBox">Mutation Strength<input type="range" min="1" max="90" value="50" class="slider" id="mutationStrength"></p>
         <button class = "button" type="button" id="populateBtn" onclick="populate()">Populate</button>
         <button class = "button" type="button" id="runBtn" onclick="update()">Run</button>
-        
-    
-        
-            
-        
-
+        <p class = "popup" onclick="myFunction()">?
+            <img class="popuptext" id="myPopup" src ="EcoSimInfo.png"></img>
+        </p>
+           
     </div>
     
+    <script>
+        function myFunction(){
+            var popup = document.getElementById("myPopup");
+            popup.classList.toggle("show");
+        }
+    </script>  
     
         <canvas id="c">
             <script src="ecosim.js"></script>

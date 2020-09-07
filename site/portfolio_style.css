@@ -330,3 +330,36 @@ a.active:hover{
       transform: translateY(-20px);
       background-color: #007ab3
     }
+
+    .popup {
+      float: left;
+      padding: 15px 20px 15px 20px;
+      margin: 4px 2px 4px 2px;
+      border-radius: 50%;
+      background: #007ab3;
+      color: #fff;
+      font-weight: 700;
+      cursor: pointer;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+    
+   
+    .popup .popuptext {
+      visibility: hidden;
+      position: absolute;
+      top: 18%;
+      right: 22%;
+      z-index: 1;
+    }
+    
+   
+
+    
+    
+    .popup .show {
+      visibility: visible;
+
+    }
