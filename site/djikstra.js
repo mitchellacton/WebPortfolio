@@ -391,6 +391,17 @@ async function pathFind(){
             temp = temp.parent;
         }
         for (k=path.length-2;k>=1;k--){
+            if (interrupt == true){
+                interrupt = false;
+                openArr = undefined;
+                path = [];
+                closedArr = [];
+                current = undefined;
+                lastOpen = 1;
+                startButton.disabled = false;
+                running = false;
+                return
+            }
             var cell = path[k];
             grid[cell.j*col+cell.i].col = colors.cyan;
             grid[cell.j*col+cell.i].w = w/2
