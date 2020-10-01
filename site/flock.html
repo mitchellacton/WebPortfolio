@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mitchell's Web Portfolio</title>
+    <link rel="stylesheet" type="text/css" href="portfolio_style.css">
+    
+</head>
+<body>
+    <div class="topnav">
+        <a href="index.html">Home</a>
+        <a href="bubble.html">Sorting</a>
+        <a href="pathfinding.html">Pathfinding</a>
+        <a class="active" href="fun.html">Simulations</a>
+        <a href="contact.html">Contact</a>
+        <label class="switch">
+            <input type="checkbox" id="darkSwitch" onclick="darkMode()">
+            <span class="slideswitch round"></span>
+        </label>
+      </div>
+      <script src="darkMode.js"></script>
+      
+      <div class = "sortnav">
+        <div class="dropdown">
+            <button class="button">Flocking Simulator</button>
+            <div class="dropdown-content">
+                <a href="ecosim.html">Ecosystem Sim</a>
+                <a>Flocking Sim</a>
+                <a>Gravity Sim (coming soon)</a>
+                
+            </div>
+        </div>
+        <p class = "sliderBox"># of Birds<input type="range" min="0" max="5000" value="500" class="slider" id="boidCount"></p>
+        <p class = "sliderBox">Separation<input type="range" min="0" max="300" value="90" class="slider" id="separation"></p>
+        <p class = "sliderBox">Cohesion<input type="range" min="0" max="300" value="50" class="slider" id="cohesion"></p>
+        <p class = "sliderBox">Alignment<input type="range" min="0" max="300" value="20" class="slider" id="alignment"></p>
+        <p class= "switchBox">Show<br>QTree<br>
+            <label class="switch2">
+                <input type="checkbox" id="qtreeSwitch">
+                <span class="slideswitch2 round"></span>
+            </label>
+        </p>
+        <button class = "button" type="button" id="stopBtn" onclick="stop()">Stop</button>
+        <button class = "button" type="button" id="runBtn" onclick="fly()">Run</button>
+        <p class = "popup" onclick="myFunction()">?
+            <img class="popuptext" id="myPopup" src ="FlockSimInfo.PNG"></img>
+        </p>
+
+           
+    </div>
+    
+    <script>
+        function myFunction(){
+            var popup = document.getElementById("myPopup");
+            popup.classList.toggle("show");
+        }
+    </script>  
+    
+        <canvas id="c" onclick="dot()">
+            <script src="flocktest.js"></script>
+            <script src="libraries/p5.js"></script>
+        </canvas>
+
+
+</body>
+</html>

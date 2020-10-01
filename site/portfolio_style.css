@@ -347,7 +347,7 @@ a.active:hover{
   .popup .popuptext {
     visibility: hidden;
     position: absolute;
-    top: 18%;
+    top: 12%;
     right: 22%;
     z-index: 1;
   }
