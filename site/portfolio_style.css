@@ -348,7 +348,8 @@ a.active:hover{
     visibility: hidden;
     position: absolute;
     top: 12%;
-    right: 22%;
+    left: 50%;
+    margin-left: -760px;
     z-index: 1;
   }
   
