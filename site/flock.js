@@ -39,24 +39,22 @@ var qTreeShow = document.getElementById("qtreeSwitch").checked,
     coh = cohesionSlider.value,
     size = 8,
     cap = 1;
-    minimumRadius = 50,
+    minimumRadius = 25,
+    flying = false,
     stopFlight = false;
 
+runButton = document.getElementById("runBtn");
 nSlider.onchange = function(){ //updates array size when user moves slider
     nSlider = document.getElementById("boidCount");
     n = nSlider.value
     clearSky();
 }
 
-class Point{
-    constructor(x, y){
-        this.x = x;
-        this.y = y;
-    }
+function stop(){
+    if (flying == true) stopFlight = true;
 }
 
 function clearSky(){
-    stopFlight = true;
     ctx.clearRect(0, 0, c.width, c.height);
     flock = [];
     qt.boids = [];
@@ -155,8 +153,6 @@ class QuadTree{
         this.divided = true;
     }
 
-    
-
     insert(boid){
         if(!this.boundary.contains(boid)){
            
@@ -168,8 +164,7 @@ class QuadTree{
             return true
         }else{
             if (!this.divided){
-                this.subdivide();
-                
+                this.subdivide();                
             }
             if (this.northeast.insert(boid)) {
                 return true;
@@ -180,8 +175,6 @@ class QuadTree{
               } else if (this.southwest.insert(boid)) {
                 return true;
               }
-
-
         }
     }
 
@@ -206,9 +199,7 @@ class QuadTree{
         }
         return found;   
     }
-
-    show(){
-        
+    show(){       
         ctx.strokeStyle = "#c085ff";
         ctx.beginPath();
         ctx.rect(this.boundary.x-this.boundary.w, this.boundary.y-this.boundary.h, this.boundary.w*2, this.boundary.h*2);
@@ -226,58 +217,12 @@ class QuadTree{
 let boundary = new Rectangle(left+screenWidth/2, ceiling+screenHeight/2, screenWidth/2, screenHeight/2);
 let qt = new QuadTree(boundary, cap);
 
-function dot(){
-    var rect = c.getBoundingClientRect();
-    var x = event.clientX - rect.left;
-    var y = event.clientY - rect.top;
-    // for (i=0;i<100;i++){
-    //     let p = new Point( x+(Math.round(Math.random())*2-1)*Math.random()*150, y + (Math.round(Math.random())*2-1)*Math.random()*150)
-    //     qt.insert(p);
-    
-        
-    // }
-    
-    let p = new Point(x,y);
-    qt.insert(p)
-    ctx.clearRect(0, 0, c.width, c.height);
-    ctx.fillStyle = '#000000';
-    ctx.beginPath();
-    ctx.rect(left, ceiling, screenWidth, screenHeight);
-    ctx.fill();
-
- 
-
-    if (qTreeShow) qt.show();
-
-    //let points = []
-    //qt.query(redRange, points);
-    //console.log(points); 
-
-    // ctx.lineWidth = 4;
-    // ctx.strokeStyle = '#ff0000';
-    // ctx.beginPath();
-    // ctx.rect(redRange.x-redRange.w,redRange.y-redRange.h,redRange.w*2,redRange.h*2);
-    // ctx.stroke();
-    // ctx.lineWidth = 1;
-
-    for (let p of points){
-        ctx.strokeStyle = '#ff0000';
-        ctx.lineWidth = 4;
-        ctx.beginPath();
-        ctx.rect(p.x,p.y,1,1);
-        ctx.stroke();
-        ctx.lineWidth = 1;
-    }
-        
-}
-
 function drawBoid(bird){
     let x = bird.position.x;
     let y = bird.position.y;
     let toX = bird.velocity.x;
     let toY = bird.velocity.y;
     
-
     ctx.fillStyle = bird.col;
     ctx.beginPath();
 
@@ -302,7 +247,6 @@ function drawBoid(bird){
 	ctx.closePath();
     
 	ctx.fill();
-
 }
 
 //Vector functions
@@ -387,82 +331,52 @@ class Boid {
         }
     }
 
-
-    align(){
-        let perception = 50;
+    align(inSight){
         let steering = createVector(0,0);
-        let total = 0;
-        let vision;
-        let inSight = [];
+        if (inSight.length == 0) return steering;
 
-        vision = new Circle(this.position.x, this.position.y, perception);
-        inSight = qt.query(vision, inSight);
         for (let nearby of inSight){
             addMag(steering, nearby.velocity);
-            total++;
-            //if (this == flock[49]) nearby.col = "#ff0000";
         }
-        
-        if (total>0){
-            divMag(steering, total);
+        if (inSight.length>0){
+            divMag(steering, inSight.length);
             setMag(steering, this.maxSpeed);
             subMag(steering, this.velocity);
             limit(steering, this.maxForce);
       
         }
-        // if (this == flock[49]){
-        //     ctx.strokeStyle = "#ff0000"
-        //     ctx.beginPath();
-        //     ctx.arc(vision.x, vision.y, vision.r, 0, 2 * Math.PI);
-        //     ctx.stroke();
-            
-        // }
         return steering
       }
     
-
-    cohesion(){
-        let perception = 50;
+    cohesion(inSight){
         let steering = createVector(0,0);
-        let total = 0;
-        let vision;
-        let inSight = [];
+        if (inSight.length == 0) return steering;
 
-        vision = new Circle(this.position.x, this.position.y, perception);
-        inSight = qt.query(vision, inSight);
         for (let nearby of inSight){
-                addMag(steering, nearby.position)
-                total++;
-
+                addMag(steering, nearby.position);
         }
-        if (total>0){
-            divMag(steering, total);
+        if (inSight.length>0){
+            divMag(steering, inSight.length);
             subMag(steering, this.position);
             setMag(steering, this.maxSpeed);
             subMag(steering, this.velocity);
             limit(steering, this.maxForce);
-
         }
         return steering
     }
 
-    separation(){
+    separation(inSight){
         let perception = 18;
         let steering = createVector(0,0);
-        let total = 0;
-        let vision;
-        let inSight = [];
-
-        vision = new Circle(this.position.x, this.position.y, perception);
-        inSight = qt.query(vision, inSight);
+        if (inSight.length == 0) return steering;
 
         for (let nearby of inSight){
             let d = dist(this, nearby);
+            if (d>perception) continue
             let diff = createVector(this.position.x, this.position.y);
             subMag(diff, nearby.position)
             divMag(diff, d*d)
             addMag(steering, diff)
-            
         }
         if (inSight.length>0){
             divMag(steering, inSight.length);
@@ -473,12 +387,11 @@ class Boid {
         return steering
     }
 
-    adjust(sep, aln, coh){
+    adjust(inSight, sep, aln, coh){
         this.acceleration = createVector(0,0);
-        let alignment = this.align();
-        let cohesion = this.cohesion();
-        let separation = this.separation();
-        
+        let alignment = this.align(inSight);
+        let cohesion = this.cohesion(inSight);
+        let separation = this.separation(inSight);
         
         multMag(separation, sep/100);
         multMag(alignment, aln/100);
@@ -488,16 +401,11 @@ class Boid {
         addMag(this.acceleration, cohesion);
         addMag(this.acceleration, separation);
     }  
+
     update(){
-        
         addMag(this.velocity, this.acceleration);
         limit(this.velocity, this.maxSpeed);
         addMag(this.position, this.velocity);
-        
-    }
-
-    show(boid){
-        drawBoid(boid);
     }
 }
 
@@ -510,13 +418,19 @@ for (i=0;i<n;i++){
 }
 
 for (let boid of flock){
-    //boid.show();
     drawBoid(boid);
 }
 
-
 function fly(){
-    
+    flying = true;
+    if (stopFlight == true){
+        flying = false;
+        stopFlight = false;
+        runBtn.disabled = false;
+        return
+    }
+
+    runBtn.disabled = true;
     qTreeShow = document.getElementById("qtreeSwitch").checked
     ctx.clearRect(0, 0, c.width, c.height);
     qt.divided = false;
@@ -531,41 +445,16 @@ function fly(){
     for (let boid of flock){
         qt.insert(boid);
     }
-    for (let boid of flock){
-        boid.edges();
-        boid.adjust(sep, aln, coh);
-        boid.update();
-        
-        drawBoid(boid);
-        //boid.show(boid);
-        
-    }
-    if (qTreeShow) qt.show();
-    window.requestAnimFrame(fly);
-}
-
-function fly(){
-    qTreeShow = document.getElementById("qtreeSwitch").checked
-    ctx.clearRect(0, 0, c.width, c.height);
-    qt.divided = false;
-    qt.boids = [];
     
-    separationSlider = document.getElementById("separation");
-    sep = parseInt(separationSlider.value);
-    alignmentSlider = document.getElementById("alignment");
-    aln = parseInt(alignmentSlider.value);
-    cohesionSlider = document.getElementById("cohesion");
-    coh = parseInt(cohesionSlider.value);
-    for (let boid of flock){
-        qt.insert(boid);
-    }
-
     for (let boid of flock){
         let nearby = [];
         range = new Circle(boid.position.x, boid.position.y, 50)
         nearby = qt.query(range, nearby);
-        for (let other of nearby){
-            
-        }
+        boid.edges();
+        boid.adjust(nearby, sep, aln, coh);
+        boid.update();
+        drawBoid(boid);
     }
+    if (qTreeShow) qt.show();
+    window.requestAnimFrame(fly);
 }
