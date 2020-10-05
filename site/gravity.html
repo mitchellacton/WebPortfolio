@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mitchell's Web Portfolio</title>
+    <link rel="stylesheet" type="text/css" href="portfolio_style.css">
+    
+</head>
+<body>
+    <div class="topnav">
+        <a href="index.html">Home</a>
+        <a href="bubble.html">Sorting</a>
+        <a href="pathfinding.html">Pathfinding</a>
+        <a class="active" href="fun.html">Simulations</a>
+        <a href="contact.html">Contact</a>
+        <label class="switch">
+            <input type="checkbox" id="darkSwitch" onclick="darkMode()">
+            <span class="slideswitch round"></span>
+        </label>
+      </div>
+      <script src="darkMode.js"></script>
+      
+      <div class = "sortnav">
+        <div class="dropdown">
+            <button class="button">Gravity Simulator</button>
+            <div class="dropdown-content">
+                <a href="ecosim.html">Ecosystem Sim</a>
+                <a>Flocking Sim</a>
+                <a>Gravity Sim</a>
+                
+            </div>
+        </div>
+        
+        <p class= "switchBox">Show<br>Trails<br>
+            <label class="switch2">
+                <input type="checkbox" id="trailSwitch">
+                <span class="slideswitch2 round"></span>
+            </label>
+        </p>
+        <button class = "button" type="button" id="stopBtn" onclick="clearSpace()">Clear</button>
+        <button class = "button" type="button" id="binaryBtn" onclick="binary()">Binary</button>
+        <button class = "button" type="button" id="binaryBtn" onclick="single()">Single Orbit</button>
+        <button class = "button" type="button" id="binaryBtn" onclick="double()">Double Orbit</button>
+        <button class = "button" type="button" id="binaryBtn" onclick="threeBody()">Three Body</button>
+        <button class = "button" type="button" id="binaryBtn" onclick="randomStars()">Fill Sky</button>
+        <button class = "button" type="button" id="binaryBtn" onclick="meteors()">Parallel Stars</button>
+        
+
+    
+        <canvas id="c" onmousedown="mouseDown()" onmouseup="mouseUp()">
+            <script src="gravity.js"></script>
+            <script src="libraries/p5.js"></script>
+        </canvas>
+
+
+</body>
+</html>
